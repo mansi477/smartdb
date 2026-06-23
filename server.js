@@ -18,3 +18,20 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+
+
+---
+- name: Deploy JAR
+  hosts: local
+
+  tasks:
+
+    - name: Copy JAR file
+      copy:
+        src: app.jar
+        dest: /tmp/app.jar
+        mode: '0755'
+
+    - name: Run JAR file
+      shell: nohup java -jar /tmp/app.jar > app.log 2>&1 &
